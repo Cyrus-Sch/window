@@ -26,11 +26,7 @@ class Screen {
     SDL_Renderer *renderer;
     std::vector<SDL_Point> points;
 public:
-    Screen() : e(), window(), renderer() {
-        SDL_Init(SDL_INIT_VIDEO);
-        SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
-        SDL_RenderSetScale(renderer, SCALING_X, SCALING_Y);
-    }
+    Screen();
     void pixel(int x, int y);
     void show();
     void input();

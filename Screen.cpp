@@ -4,6 +4,14 @@
 
 #include "Screen.h"
 
+Screen::Screen() {
+    SDL_Init(SDL_INIT_EVERYTHING);
+    window = SDL_CreateWindow("Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+}
 
 void Screen::pixel(int x, int y) {
     SDL_Point point = {x, y};
@@ -57,6 +65,12 @@ void Screen::handleKeys() {
 void Screen::handleInput() {
     input();
     handleKeys();
+}
+
+void Screen::clear() {
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
 }
 
 

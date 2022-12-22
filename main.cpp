@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <array>
 #include "vector"
+#include "Screen.h"
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 #define SCREEN_BPP 32
@@ -16,70 +17,6 @@ int width = 960;
 int height = 960;
 float scaling = 2.0;
 
-class Screen {
-    SDL_Event e;
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    std::vector<SDL_Point> points;
-public:
-    Screen() : e(), window(), renderer() {
-        SDL_Init(SDL_INIT_VIDEO);
-        SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer);
-        SDL_RenderSetScale(renderer, scaling, scaling);
-    }
-
-    void pixel(int x, int y) {
-        auto point = SDL_Point();
-        point.x = x;
-        point.y = y;
-        points.push_back(point);
-    }
-
-    void show() {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-        SDL_SetRenderDrawColor(renderer, 144, 238, 144, 255);
-        for (auto &point: points) {
-            SDL_RenderDrawPoint(renderer, point.x, point.y);
-        }
-        SDL_RenderPresent(renderer);
-    }
-
-    void input() {
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) {
-                SDL_Quit();
-                exit(0);
-            }
-        }
-    }
-
-    void handleKeyboardInput() {
-        if (e.type == SDL_KEYDOWN) {
-            switch (e.key.keysym.sym) {
-                case SDLK_UP:
-                    // handle up arrow key press
-                    break;
-                case SDLK_DOWN:
-                    // handle down arrow key press
-                    break;
-                case SDLK_LEFT:
-                    // handle left arrow key press
-                    break;
-                case SDLK_RIGHT:
-                    // handle right arrow key press
-                    break;
-                default:
-                    // handle other key press
-                    break;
-            }
-        }
-    }
-
-    void clear() {
-        points.clear();
-    }
-};
 
 void drawline(Screen &screen, std::pair<int, int> a, std::pair<int, int> b) {
     std::pair<int, int> ab(b.first - a.first, b.second - a.second);
